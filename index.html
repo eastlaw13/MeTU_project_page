@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>MeTU: MobileViT-based U-Net for Efficient Edge Segmentation</title>
+  <title>MeTU: Lightweight MobileViT-based Segmentation for Edge Devices</title>
   
   <link rel="stylesheet" href="static/css/bulma.min.css">
   <link rel="stylesheet" href="static/css/index.css">
@@ -54,10 +54,7 @@
           <h2 class="title is-3">Project Overview</h2>
           <div class="content has-text-justified">
             <p>
-              Following the success of Vision Transformers (ViT), hybrid architectures like <strong>MobileViT</strong> have demonstrated remarkable performance by combining CNNs' inductive bias with Transformers' global representation capabilities. However, deploying these models on edge devices involves strict constraints: limited parameter counts, the need for high throughput (FPS), and robustness against real-world environmental noise.
-            </p>
-            <p>
-              <strong>MeTU</strong> (MobileViT-based U-Net) is designed to bridge the gap between high-accuracy segmentation and edge feasibility. Our goal was to create a model that remains robust under varying lighting and noise conditions while maintaining a compact footprint suitable for industrial automation and autonomous systems.
+              <strong>MeTU</strong> (MobileViT-based U-Net) is designed to bridge the gap between high-accuracy segmentation and edge feasibility. By combining <strong>MobileViT</strong> with <strong>U-Net style skip connections</strong>, MeTU leverages global representation while maintaining spatial precision on resource-constrained edge CPUs.
             </p>
           </div>
         </div>
@@ -65,28 +62,7 @@
     </div>
   </section>
 
-  <section class="section">
-    <div class="container is-max-desktop">
-      <h2 class="title is-3 has-text-centered">Proposed Architecture</h2>
-      <div class="columns is-centered">
-        <div class="column is-full has-text-centered">
-          <img src="static/images/model_architecture.png" alt="MeTU Model Architecture" style="max-width: 900px; width: 100%; margin-bottom: 2rem;">
-          <div class="content has-text-justified">
-            <p>
-              Inspired by <strong>TransUNet</strong>, MeTU utilizes a U-Net style decoder with skip connections to restore fine-grained spatial details crucial for boundary accuracy. 
-            </p>
-            <ul>
-              <li><strong>Spatial Context Preservation:</strong> We integrated <strong>Coordinate Attention</strong> instead of standard Squeeze-and-Excitation (SE) to better preserve spatial information during feature aggregation.</li>
-              <li><strong>Efficiency Optimization:</strong> To minimize computational cost, <strong>Depthwise Convolutions</strong> are employed throughout the decoder to lower FLOPs without sacrificing representation power.</li>
-              <li><strong>Hardware-Aware Design:</strong> Extensive tuning revealed that applying skip connections to only the <strong>deepest two layers</strong> provides the optimal trade-off between segmentation accuracy (mIoU) and inference latency on ARM-based edge CPUs.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section is-light" id="performance">
+  <section class="section" id="performance">
     <div class="container is-max-desktop">
       <h2 class="title is-3 has-text-centered">Quantitative Analysis</h2>
       
@@ -99,12 +75,7 @@
           <img src="static/images/Cityscapes_class_iou.png" alt="Cityscapes Class IoU Chart">
         </div>
       </div>
-      <div class="content mt-4">
-        <p>
-          MeTU-xs achieves <strong>73.46% mIoU</strong>, outperforming Segformer-b0 by 3.0%p while using 45% fewer parameters. The architecture is particularly effective on small/thin objects like <strong>'Pole' (+5.0%p)</strong> and <strong>'Traffic Sign' (+3.3%p)</strong>, proving the effectiveness of our multi-scale feature fusion.
-        </p>
-      </div>
-
+      
       <h3 class="title is-4 mt-6">2. Generalization (PASCAL VOC 2012)</h3>
       <div class="columns is-centered">
         <div class="column is-half has-text-centered">
@@ -114,9 +85,18 @@
           <img src="static/images/VOC_class_iou.png" alt="VOC Class IoU Chart">
         </div>
       </div>
-      <div class="content mt-4">
+
+      <h3 class="title is-4 mt-6">3. Edge Hardware Benchmark (Raspberry Pi 4B)</h3>
+      <div class="columns is-centered">
+        <div class="column is-full has-text-centered">
+          <img src="static/images/Edge_perform.png" alt="Edge Performance Table" style="max-width: 850px; width: 100%;">
+        </div>
+      </div>
+
+      <div class="notification is-light mt-6 has-text-centered">
         <p>
-          On non-rigid objects, MeTU-xs leverages hybrid inductive bias to reach <strong>70.31% mIoU</strong>, a significant <strong>+9.23%p gain</strong> over pure transformer architectures in the low-parameter regime.
+          Detailed experimental setups, additional ablation studies, and raw performance logs are documented in our official repository. 
+          Please refer to the <strong>Code & Weights</strong> link at the top for the full research data.
         </p>
       </div>
     </div>
@@ -138,7 +118,7 @@
         </div>
         <div class="column is-half content">
           <p>
-            Under <strong>Cityscapes-C</strong> (unseen noise/weather), MeTU-xs maintains <strong>43.87% mPC</strong>, demonstrating superior reliability compared to ASPP-based decoders like DeepLabV3. 
+            MeTU-xs maintains stable performance under <strong>Cityscapes-C</strong> environmental corruptions, outperforming traditional decoders in out-of-distribution reliability.
           </p>
         </div>
       </div>
@@ -147,45 +127,23 @@
 
   <section class="section is-light">
     <div class="container is-max-desktop">
-      <h2 class="title is-3 has-text-centered">Edge Hardware Benchmark: Raspberry Pi 4B</h2>
-      <div class="columns is-centered">
-        <div class="column is-full has-text-centered">
-          <img src="static/images/Edge_perform.png" alt="Edge Performance Table" style="max-width: 850px; width: 100%;">
-          <div class="content mt-4 has-text-justified">
-            <p>
-              MeTU-xxs achieves a steady <strong>12.17 FPS</strong> with extremely low jitter (<strong>P50-P99 gap < 1.1ms</strong>), ensuring deterministic execution for real-time robotic systems. 
-            </p>
-            <p>
-              Analysis suggests a <strong>memory-bandwidth bottleneck</strong>: despite fewer parameters, multi-scale skip connections increase memory traffic on ARM CPUs compared to compute-bound convolutional layers.
-            </p>
-          </div>
+      <h2 class="title is-3 has-text-centered">Qualitative Results</h2>
+      <div id="results-carousel" class="carousel results-carousel">
+        <div class="item has-text-centered">
+          <img src="static/images/result_xs.jpg" alt="Prediction Result">
+          <p class="mt-2 is-size-6">MeTU-xs: Urban Scene Segmentation</p>
+        </div>
+        <div class="item has-text-centered">
+          <img src="static/images/model_architecture.png" alt="Model Architecture">
+          <p class="mt-2 is-size-6">MeTU Hybrid Architecture Diagram</p>
         </div>
       </div>
-    </div>
-  </section>
 
-  <section class="section">
-    <div class="container is-max-desktop">
-      <h2 class="title is-3 has-text-centered">Technical Discussion</h2>
-      <div class="content has-text-justified">
-        <p>
-          Our experiments highlight a critical architectural trade-off. While MeTU dominates on clean data, <strong>Segformer-b0</strong> showed slightly higher robustness against extreme corruption (mPC 47.38% vs 43.87%). We attribute this to the <strong>global shape bias</strong> inherent in pure Transformers, which rely less on local textures that are easily distorted by noise. 
+      <div class="content has-text-centered mt-6">
+        <p class="is-size-5">
+          For the complete source code and pre-trained checkpoints, visit our 
+          <a href="https://github.com/eastlaw13/MeTU-MobileViT-based-U-Net-architecture" target="_blank" style="font-weight: bold; text-decoration: underline;">GitHub Repository</a>.
         </p>
-        <p>
-          However, MeTU's superior performance in high-resolution detail recovery and its parameter efficiency make it a more viable candidate for edge-based industrial defect detection where boundary precision is paramount.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <section class="section is-light">
-    <div class="container is-max-desktop">
-      <h2 class="title is-3 has-text-centered">Future Work</h2>
-      <div class="content">
-        <ul>
-          <li><strong>Robust Efficiency:</strong> Researching methods to enhance Transformer-level robustness while maintaining the lightweight CNN advantage.</li>
-          <li><strong>Extended Validation:</strong> Testing in high-fidelity simulations and diverse real-world environmental datasets to further refine hardware-aware optimizations.</li>
-        </ul>
       </div>
     </div>
   </section>
