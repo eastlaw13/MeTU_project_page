@@ -3,57 +3,43 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  
-  <title>MeTU: Lightweight MobileViT-based Segmentation for Edge Devices</title>
-  <meta name="description" content="MeTU uses MobileViT as a backbone with U-Net skip connections for highly efficient, real-time semantic segmentation on edge devices like Raspberry Pi.">
-  <meta name="keywords" content="Computer Vision, Semantic Segmentation, MobileViT, U-Net, Edge Devices, Smart Factory, Deep Learning, Lightweight Models">
-  <meta name="author" content="kdb">
+  <title>MeTU Project: Smart Segmentation for Edge Devices</title>
   
   <link rel="stylesheet" href="static/css/bulma.min.css">
   <link rel="stylesheet" href="static/css/index.css">
   <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
-  <link rel="stylesheet" href="static/css/bulma-slider.min.css">
   <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
   
   <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script defer src="static/js/fontawesome.all.min.js"></script>
   <script defer src="static/js/bulma-carousel.min.js"></script>
-  <script defer src="static/js/bulma-slider.min.js"></script>
   <script defer src="static/js/index.js"></script>
 </head>
 <body>
 
-  <main id="main-content">
   <section class="hero">
     <div class="hero-body">
       <div class="container is-max-desktop">
         <div class="columns is-centered">
           <div class="column has-text-centered">
-            <h1 class="title is-1 publication-title">MeTU: Lightweight MobileViT-based Segmentation for Edge devices</h1>
+            <h1 class="title is-1 publication-title">🚀 MeTU: Fast & Light Vision for the Edge</h1>
             <div class="is-size-5 publication-authors">
-              <span class="Project Lead"><strong>DongBeom Kim</strong></span>
+              <span class="author-block"><strong>DongBeom Kim (kdb)</strong></span>
             </div>
-            <div class="is-size-5 publication-authors">
-              <span class="author-block">2D computer vision toy project</span>
+            <div class="is-size-6 mt-2" style="color: #666;">
+              Computer Vision AI Researcher & Engineer
             </div>
 
             <div class="column has-text-centered">
               <div class="publication-links">
-                <span class="link-block">
-                  <a href="https://github.com/eastlaw13/MeTU-MobileViT-based-U-Net-architecture" target="_blank"
-                  class="external-link button is-normal is-rounded is-dark">
+                <a href="https://github.com/eastlaw13/MeTU-MobileViT-based-U-Net-architecture" target="_blank" class="button is-normal is-rounded is-dark">
                   <span class="icon"><i class="fab fa-github"></i></span>
-                  <span>Code</span>
-                  </a>
-                </span>
-                <span class="link-block">
-                  <a href="#demo" class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon"><i class="fas fa-play"></i></span>
-                  <span>Demo Video</span>
-                  </a>
-                </span>
+                  <span>Code & Weights</span>
+                </a>
+                <a href="#performance" class="button is-normal is-rounded is-light border">
+                  <span class="icon"><i class="fas fa-chart-bar"></i></span>
+                  <span>See Results</span>
+                </a>
               </div>
             </div>
           </div>
@@ -62,106 +48,107 @@
     </div>
   </section>
 
-<section class="hero teaser" id="demo">
-  <div class="container is-max-desktop">
-    <div class="hero-body has-text-centered">
-      <video id="teaser" autoplay controls muted loop height="100%" style="border-radius: 8px;">
-        <source src="static/videos/MeTU_xs_robustness_demo_video.mp4" type="video/mp4">
-      </video>
-      <h2 class="subtitle has-text-centered mt-4">
-        <strong>MeTU</strong> achieves Light-weight and robust semantic segmentation architecture. From Cityscapes-C dataset, we demonstrate the robustness of our model against various corruptions (e.g., noise, blur, weather conditions) while maintaining a compact parameter size suitable for edge deployment.
-      </h2>
-    </div>
-  </div>
-</section>
-
-<section class="section hero is-light">
-  <div class="container is-max-desktop">
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3">Abstract</h2>
-        <div class="content has-text-justified">
-          <p>
-            Deploying highly accurate semantic segmentation models in smart factory environments is often bottlenecked by the limited computational resources of edge devices (e.g., Raspberry Pi). To address this, we introduce <strong>MeTU</strong>, a lightweight segmentation architecture that utilizes MobileViT as its backbone. 
-          </p>
-          <p>
-            By integrating U-Net style skip connections, MeTU effectively preserves detailed object boundaries crucial for industrial defect detection and automation tasks. Through rigorous architectural tuning, we developed multiple variants (including <strong>xxs</strong> and <strong>xs</strong>), significantly reducing the total parameter count while maintaining a competitive mean Intersection over Union (mIoU). The result is a highly efficient model capable of fast inference on resource-constrained edge hardware without sacrificing visual accuracy.
-          </p>
+  <section class="section hero is-light">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">The Idea behind MeTU 💡</h2>
+          <div class="content has-text-justified is-size-5">
+            <p>
+              "How can we run high-quality segmentation on a tiny Raspberry Pi?" This question led to <strong>MeTU</strong>. 
+              By combining <strong>MobileViT</strong> (which sees the big picture) with <strong>U-Net skip connections</strong> (which catch the fine details), 
+              we've built a model that's light enough for edge devices but sharp enough for industrial tasks.
+            </p>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<section class="section">
-  <div class="container is-max-desktop">
-    <div class="columns is-centered">
-      <div class="column is-full">
-        <h2 class="title is-3 has-text-centered">Quantitative Evaluation</h2>
-        <p class="has-text-centered mb-5">Comparison of MeTU variants (v3). Our models demonstrate an optimal balance between parameter size and segmentation accuracy (mIoU).</p>
-        
+  <section class="section" id="demo">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Real-world Robustness 🌦️</h2>
+      <div class="has-text-centered mb-5">
+        <video id="teaser" autoplay controls muted loop style="border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+          <source src="static/videos/MeTU_xs_robustness_demo_video.mp4" type="video/mp4">
+        </video>
+        <p class="mt-4 is-size-6">
+          <strong>MeTU</strong> isn't just for sunny days. Even in fog, rain, or snow (Cityscapes-C), our model maintains steady performance.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="performance">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">How fast & accurate? 📊</h2>
+      
+      <div class="columns is-vcentered mt-6">
+        <div class="column is-half">
+          <h3 class="title is-4">🏆 Better than Segformer-b0</h3>
+          <p>MeTU-xs outperforms Segformer-b0 in accuracy (mIoU) while using <strong>45% fewer parameters</strong>. It's the perfect balance between 'Small' and 'Smart'.</p>
+          <img src="static/images/cityscapes_table.png" alt="Cityscapes Performance" class="mt-4 shadow-img">
+        </div>
+        <div class="column is-half has-text-centered">
+          <img src="static/images/cityscapes_bar_chart.png" alt="Class IoU Chart" class="shadow-img">
+          <p class="is-size-7 mt-2 italic">Class-wise mIoU Comparison</p>
+        </div>
+      </div>
+
+      <div class="box mt-6" style="background-color: #f9f9f9; border: none; border-radius: 15px;">
+        <h3 class="title is-4 has-text-centered">⚡ Tested on Raspberry Pi 4B</h3>
         <div class="table-container">
-          <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+          <table class="table is-fullwidth" style="background: transparent;">
             <thead>
-              <tr class="has-background-grey-light">
-                <th class="has-text-centered has-text-white">Model Variant</th>
-                <th class="has-text-centered has-text-white">Backbone</th>
-                <th class="has-text-centered has-text-white">Parameters (M)</th>
-                <th class="has-text-centered has-text-white">mIoU (%)</th>
+              <tr>
+                <th>Model Variant</th>
+                <th class="has-text-centered">Params</th>
+                <th class="has-text-centered">Latency (CPU)</th>
+                <th class="has-text-centered">FPS</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td class="has-text-centered"><strong>MeTU-xxs (v3)</strong></td>
-                <td class="has-text-centered">MobileViT-xxs</td>
-                <td class="has-text-centered"><em>[수치 입력 (예: 1.2M)]</em></td>
-                <td class="has-text-centered"><em>[수치 입력 (예: 68.5)]</em></td>
+                <td><strong>MeTU-xxs</strong></td>
+                <td class="has-text-centered">1.02M</td>
+                <td class="has-text-centered">83.02 ms</td>
+                <td class="has-text-centered"><strong>12.17</strong></td>
               </tr>
-              <tr>
-                <td class="has-text-centered"><strong>MeTU-xs (v3)</strong></td>
-                <td class="has-text-centered">MobileViT-xs</td>
-                <td class="has-text-centered"><em>[수치 입력 (예: 2.3M)]</em></td>
-                <td class="has-text-centered"><em>[수치 입력 (예: 72.1)]</em></td>
+              <tr style="color: #888;">
+                <td>MeTU-xs</td>
+                <td class="has-text-centered">2.03M</td>
+                <td class="has-text-centered">134.30 ms</td>
+                <td class="has-text-centered">7.44</td>
               </tr>
             </tbody>
           </table>
         </div>
+        <p class="is-size-6 has-text-centered">Reliable inference with ultra-low jitter (<1.1ms variation).</p>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<section class="hero is-small is-light">
-  <div class="hero-body">
+  <section class="section is-light">
     <div class="container is-max-desktop">
-      <h2 class="title is-3 has-text-centered">Qualitative Results</h2>
-      <div id="results-carousel" class="carousel results-carousel mt-4">
-       <div class="item">
-        <img src="static/images/result_xxs.jpg" alt="MeTU-xxs segmentation result"/>
-        <h2 class="subtitle has-text-centered mt-2">Segmentation mask generated by MeTU-xxs</h2>
-      </div>
-      <div class="item">
-        <img src="static/images/result_xs.jpg" alt="MeTU-xs segmentation result"/>
-        <h2 class="subtitle has-text-centered mt-2">Segmentation mask generated by MeTU-xs</h2>
-      </div>
-      <div class="item">
-        <img src="static/images/architecture.jpg" alt="MeTU Architecture Diagram"/>
-        <h2 class="subtitle has-text-centered mt-2">Overall Architecture of MeTU</h2>
+      <h2 class="title is-3 has-text-centered">Qualitative Results 🖼️</h2>
+      <div id="results-carousel" class="carousel results-carousel">
+        <div class="item has-text-centered">
+          <img src="static/images/result_xs.jpg" alt="Prediction 1">
+          <p>MeTU-xs: Crisp boundaries on city streets</p>
+        </div>
+        <div class="item has-text-centered">
+          <img src="static/images/architecture.jpg" alt="Architecture">
+          <p>The Hybrid Power: MobileViT + U-Net Skip Connections</p>
+        </div>
       </div>
     </div>
-  </div>
-  </div>
-</section>
+  </section>
 
-  <footer class="footer mt-6">
-    <div class="container">
-      <div class="content has-text-centered">
-        <p>
-          Website template based on <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page</a>.
-        </p>
-      </div>
+  <footer class="footer">
+    <div class="content has-text-centered">
+      <p><strong>MeTU Project</strong> by DongBeom Kim. Built for efficient Vision AI.</p>
     </div>
   </footer>
-  </main>
+
 </body>
 </html>
