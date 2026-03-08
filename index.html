@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>MeTU: Lightweight MobileViT-based Segmentation for Edge Devices</title>
+  <title>MeTU: MobileViT-based U-Net for Efficient Edge Segmentation</title>
   
   <link rel="stylesheet" href="static/css/bulma.min.css">
   <link rel="stylesheet" href="static/css/index.css">
@@ -35,9 +35,9 @@
                   <span class="icon"><i class="fa-brands fa-github"></i></span>
                   <span>Code & Weights</span>
                 </a>
-                <a href="#performance" class="button is-normal is-rounded is-light">
-                  <span class="icon"><i class="fa-solid fa-chart-column"></i></span>
-                  <span>Experiments</span>
+                <a href="#experiments" class="button is-normal is-rounded is-light">
+                  <span class="icon"><i class="fa-solid fa-microscope"></i></span>
+                  <span>Technical Analysis</span>
                 </a>
               </div>
             </div>
@@ -51,10 +51,13 @@
     <div class="container is-max-desktop">
       <div class="columns is-centered has-text-centered">
         <div class="column is-four-fifths">
-          <h2 class="title is-3">Project Overview</h2>
+          <h2 class="title is-3">Motivation</h2>
           <div class="content has-text-justified">
             <p>
-              <strong>MeTU</strong> (MobileViT-based U-Net) is designed to bridge the gap between high-accuracy segmentation and edge feasibility. By combining <strong>MobileViT</strong> with <strong>U-Net style skip connections</strong>, MeTU leverages global representation while maintaining spatial precision on resource-constrained edge CPUs.
+              While Vision Transformers (ViT) have redefined semantic representation, deploying them on edge hardware remains a significant challenge due to computational overhead. Hybrid models like <strong>MobileViT</strong> effectively merge CNNs' inductive bias with Transformers' global context, yet their application in segmentation tasks often struggles with boundary precision and environmental robustness.
+            </p>
+            <p>
+              <strong>MeTU</strong> is proposed to address these limitations. By rethinking the decoder structure and attention mechanisms, we aim to provide a high-precision segmentation model that maintains deterministic performance and robustness under real-world adverse conditions, all while adhering to the strict resource constraints of ARM-based edge CPUs.
             </p>
           </div>
         </div>
@@ -62,49 +65,54 @@
     </div>
   </section>
 
-  <section class="section" id="performance">
+  <section class="section">
     <div class="container is-max-desktop">
-      <h2 class="title is-3 has-text-centered">Quantitative Analysis</h2>
-      
-      <h3 class="title is-4 mt-6">1. Urban Driving Scenes (Cityscapes)</h3>
+      <h2 class="title is-3 has-text-centered">Proposed Architecture</h2>
       <div class="columns is-centered">
-        <div class="column is-half has-text-centered">
-          <img src="static/images/Cityscapes_mIoU_table.png" alt="Cityscapes mIoU Table">
-        </div>
-        <div class="column is-half has-text-centered">
-          <img src="static/images/Cityscapes_class_iou.png" alt="Cityscapes Class IoU Chart">
+        <div class="column is-full">
+          <img src="static/images/model_architecture.png" alt="Architecture Diagram" class="mb-5 shadow-img" style="display: block; margin: 0 auto; max-width: 85%;">
+          <div class="content has-text-justified">
+            <p>
+              Inspired by the <strong>TransUNet</strong> framework, MeTU utilizes a MobileViT backbone paired with a specialized U-Net style decoder. Key technical optimizations include:
+            </p>
+            <ul>
+              <li><strong>Coordinate Attention Integration:</strong> Unlike standard SE-blocks that focus solely on channel-wise importance, we adopted Coordinate Attention to capture long-range dependencies with precise positional information, significantly improving defect detection in industrial contexts.</li>
+              <li><strong>Hardware-Aware Decoder:</strong> To balance the trade-off between mIoU and latency, skip connections were strategically limited to the <strong>deepest two stages</strong>. This reduction in high-resolution feature fusion minimizes memory traffic while preserving essential semantic information.</li>
+              <li><strong>Efficient Feature Aggregation:</strong> In refinement block, we utilizes Depthwise Convolutions to keep the FLOPs count low without compromising the model's representative capacity.</li>
+            </ul>
+          </div>
         </div>
       </div>
+    </div>
+  </section>
+
+  <section class="section is-light" id="experiments">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Experimental Evaluation</h2>
       
-      <h3 class="title is-4 mt-6">2. Generalization (PASCAL VOC 2012)</h3>
+      <h3 class="title is-4">1. Urban Driving (Cityscapes)</h3>
+      <div class="content">
+        <p>Evaluated on 19 classes at 512x1024 resolution. MeTU-xs achieves <strong>73.46% mIoU</strong>, proving superior on detailed objects like poles (+5.0%p) compared to Segformer-b0.</p>
+      </div>
       <div class="columns is-centered">
-        <div class="column is-half has-text-centered">
-          <img src="static/images/VOC_mIoU_table.png" alt="VOC mIoU Table">
-        </div>
-        <div class="column is-half has-text-centered">
-          <img src="static/images/VOC_class_iou.png" alt="VOC Class IoU Chart">
-        </div>
+        <div class="column is-half has-text-centered"><img src="static/images/Cityscapes_mIoU_table.png"></div>
+        <div class="column is-half has-text-centered"><img src="static/images/Cityscapes_class_iou.png"></div>
       </div>
 
-      <h3 class="title is-4 mt-6">3. Edge Hardware Benchmark (Raspberry Pi 4B)</h3>
-      <div class="columns is-centered">
-        <div class="column is-full has-text-centered">
-          <img src="static/images/Edge_perform.png" alt="Edge Performance Table" style="max-width: 850px; width: 100%;">
-        </div>
+      <h3 class="title is-4 mt-6">2. General Object Segmentation (PASCAL VOC 2012)</h3>
+      <div class="content">
+        <p>Tested on 20 foreground classes at 512x512 resolution. MeTU-xs leverages hybrid biases to reach <strong>70.31% mIoU</strong>, outperforming lightweight baselines by over 9%p.</p>
       </div>
-
-      <div class="notification is-light mt-6 has-text-centered">
-        <p>
-          Detailed experimental setups, additional ablation studies, and raw performance logs are documented in our official repository. 
-          Please refer to the <strong>Code & Weights</strong> link at the top for the full research data.
-        </p>
+      <div class="columns is-centered">
+        <div class="column is-half has-text-centered"><img src="static/images/VOC_mIoU_table.png"></div>
+        <div class="column is-half has-text-centered"><img src="static/images/VOC_class_iou.png"></div>
       </div>
     </div>
   </section>
 
   <section class="section">
     <div class="container is-max-desktop">
-      <h2 class="title is-3 has-text-centered">Robustness in Adverse Conditions</h2>
+      <h2 class="title is-3 has-text-centered">Robustness Analysis</h2>
       <div class="columns is-centered">
         <div class="column is-four-fifths">
           <div class="publication-video" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px;">
@@ -114,11 +122,11 @@
       </div>
       <div class="columns is-vcentered mt-5">
         <div class="column is-half has-text-centered">
-          <img src="static/images/Cityscapes_c_mIoU_table.png" alt="Cityscapes-C Table">
+          <img src="static/images/Cityscapes_c_mIoU_table.png" alt="Robustness Results">
         </div>
         <div class="column is-half content">
           <p>
-            MeTU-xs maintains stable performance under <strong>Cityscapes-C</strong> environmental corruptions, outperforming traditional decoders in out-of-distribution reliability.
+            We evaluated robustness using <strong>Cityscapes-C</strong> (16 corruption types across 5 severity levels). MeTU-xs maintains a stable <strong>43.87% mPC</strong>, demonstrating reliable performance against environmental noise.
           </p>
         </div>
       </div>
@@ -127,30 +135,47 @@
 
   <section class="section is-light">
     <div class="container is-max-desktop">
-      <h2 class="title is-3 has-text-centered">Qualitative Results</h2>
-      <div id="results-carousel" class="carousel results-carousel">
-        <div class="item has-text-centered">
-          <img src="static/images/result_xs.jpg" alt="Prediction Result">
-          <p class="mt-2 is-size-6">MeTU-xs: Urban Scene Segmentation</p>
-        </div>
-        <div class="item has-text-centered">
-          <img src="static/images/model_architecture.png" alt="Model Architecture">
-          <p class="mt-2 is-size-6">MeTU Hybrid Architecture Diagram</p>
+      <h2 class="title is-3 has-text-centered">Edge Device Performance</h2>
+      <div class="columns is-centered">
+        <div class="column is-full has-text-centered">
+          <p class="mb-5">Benchmark: <strong>Raspberry Pi 4B (4GB)</strong> | ONNX FP32 | 200 Sample Images</p>
+          <img src="static/images/Edge_perform.png" alt="Performance Chart" style="max-width: 800px; width: 100%;">
+          <div class="content mt-4 has-text-justified">
+            <p>
+              MeTU-xxs delivers <strong>12.17 FPS</strong> with a central latency of 83.02ms. More importantly, the <strong>P50-P99 gap is kept under 1.1ms</strong>, ensuring the high determinism required for real-time industrial control. 
+            </p>
+            <p>
+              <strong>Analysis:</strong> Our profiling indicates a <strong>memory-bandwidth bottleneck</strong> on ARM CPUs; despite lower FLOPs, the high-resolution skip connections increase memory access overhead compared to compute-heavy dense layers.
+            </p>
+          </div>
         </div>
       </div>
+    </div>
+  </section>
 
-      <div class="content has-text-centered mt-6">
-        <p class="is-size-5">
-          For the complete source code and pre-trained checkpoints, visit our 
-          <a href="https://github.com/eastlaw13/MeTU-MobileViT-based-U-Net-architecture" target="_blank" style="font-weight: bold; text-decoration: underline;">GitHub Repository</a>.
+  <section class="section">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Discussion & Repository</h2>
+      <div class="content has-text-justified">
+        <p>
+          MeTU demonstrates that architectural efficiency on edge devices is not merely a function of parameter count, but a complex interaction between <strong>Inductive Bias, Global Representation, and Hardware Memory Bandwidth</strong>. 
         </p>
+        <p>
+          For more details on the training logs, ablation studies (including Coordinate Attention comparisons), and pre-trained ONNX models, please visit the repository.
+        </p>
+      </div>
+      <div class="has-text-centered mt-5">
+        <a href="https://github.com/eastlaw13/MeTU-MobileViT-based-U-Net-architecture" target="_blank" class="button is-large is-dark is-rounded">
+          <span class="icon"><i class="fa-brands fa-github"></i></span>
+          <span>Explore Full Research</span>
+        </a>
       </div>
     </div>
   </section>
 
   <footer class="footer">
     <div class="content has-text-centered">
-      <p><strong>MeTU Project</strong> by DongBeom Kim. Technical portfolio for Computer Vision Research.</p>
+      <p><strong>MeTU: MobileViT-based U-Net</strong> Research by DongBeom Kim.</p>
     </div>
   </footer>
 
