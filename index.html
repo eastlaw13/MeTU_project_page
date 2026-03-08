@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>MeTU Project: Smart Segmentation for Edge Devices</title>
+  <title>MeTU: Lightweight MobileViT-based Segmentation for Edge Devices</title>
   
   <link rel="stylesheet" href="static/css/bulma.min.css">
   <link rel="stylesheet" href="static/css/index.css">
   <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
   <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   
   <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script defer src="static/js/bulma-carousel.min.js"></script>
@@ -22,23 +22,22 @@
       <div class="container is-max-desktop">
         <div class="columns is-centered">
           <div class="column has-text-centered">
-            <h1 class="title is-1 publication-title">🚀 MeTU: Fast & Light Vision for the Edge</h1>
+            <h1 class="title is-1 publication-title">MeTU: Lightweight MobileViT-based Segmentation for Edge Devices</h1>
             <div class="is-size-5 publication-authors">
-              <span class="author-block"><strong>DongBeom Kim (kdb)</strong></span>
+              <span class="author-block"><strong>DongBeom Kim</strong></span>
             </div>
-            <div class="is-size-6 mt-2" style="color: #666;">
+            <div class="is-size-6 mt-2" style="color: #555; letter-spacing: 0.5px;">
               Computer Vision AI Researcher & Engineer
             </div>
-
             <div class="column has-text-centered">
               <div class="publication-links">
                 <a href="https://github.com/eastlaw13/MeTU-MobileViT-based-U-Net-architecture" target="_blank" class="button is-normal is-rounded is-dark">
                   <span class="icon"><i class="fab fa-github"></i></span>
                   <span>Code & Weights</span>
                 </a>
-                <a href="#performance" class="button is-normal is-rounded is-light border">
-                  <span class="icon"><i class="fas fa-chart-bar"></i></span>
-                  <span>See Results</span>
+                <a href="#performance" class="button is-normal is-rounded is-light">
+                  <span class="icon"><i class="fas fa-chart-line"></i></span>
+                  <span>Quantitative Results</span>
                 </a>
               </div>
             </div>
@@ -52,12 +51,11 @@
     <div class="container is-max-desktop">
       <div class="columns is-centered has-text-centered">
         <div class="column is-four-fifths">
-          <h2 class="title is-3">The Idea behind MeTU 💡</h2>
-          <div class="content has-text-justified is-size-5">
+          <h2 class="title is-3">Project Overview</h2>
+          <div class="content has-text-justified">
             <p>
-              "How can we run high-quality segmentation on a tiny Raspberry Pi?" This question led to <strong>MeTU</strong>. 
-              By combining <strong>MobileViT</strong> (which sees the big picture) with <strong>U-Net skip connections</strong> (which catch the fine details), 
-              we've built a model that's light enough for edge devices but sharp enough for industrial tasks.
+              <strong>MeTU</strong> addresses the trade-off between accuracy and efficiency by integrating <strong>MobileViT</strong> as a backbone with <strong>U-Net style skip connections</strong>. 
+              This hybrid approach leverages global context from Transformers while preserving spatial details via CNN skip connections, optimized for real-time inference on edge devices like Raspberry Pi.
             </p>
           </div>
         </div>
@@ -65,80 +63,96 @@
     </div>
   </section>
 
-  <section class="section" id="demo">
-    <div class="container is-max-desktop">
-      <h2 class="title is-3 has-text-centered">Real-world Robustness 🌦️</h2>
-      <div class="has-text-centered mb-5">
-        <video id="teaser" autoplay controls muted loop style="border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
-          <source src="static/videos/MeTU_xs_robustness_demo_video.mp4" type="video/mp4">
-        </video>
-        <p class="mt-4 is-size-6">
-          <strong>MeTU</strong> isn't just for sunny days. Even in fog, rain, or snow (Cityscapes-C), our model maintains steady performance.
-        </p>
-      </div>
-    </div>
-  </section>
-
   <section class="section" id="performance">
     <div class="container is-max-desktop">
-      <h2 class="title is-3 has-text-centered">How fast & accurate? 📊</h2>
-      
-      <div class="columns is-vcentered mt-6">
-        <div class="column is-half">
-          <h3 class="title is-4">🏆 Better than Segformer-b0</h3>
-          <p>MeTU-xs outperforms Segformer-b0 in accuracy (mIoU) while using <strong>45% fewer parameters</strong>. It's the perfect balance between 'Small' and 'Smart'.</p>
-          <img src="static/images/cityscapes_table.png" alt="Cityscapes Performance" class="mt-4 shadow-img">
-        </div>
-        <div class="column is-half has-text-centered">
-          <img src="static/images/cityscapes_bar_chart.png" alt="Class IoU Chart" class="shadow-img">
-          <p class="is-size-7 mt-2 italic">Class-wise mIoU Comparison</p>
-        </div>
+      <h2 class="title is-3 has-text-centered">Quantitative Evaluation: Cityscapes</h2>
+      <div class="content has-text-centered">
+        <p>
+          MeTU-xs achieves <strong>73.46% mIoU</strong> on Cityscapes, outperforming Segformer-b0 despite using <strong>45% fewer parameters</strong>.
+        </p>
       </div>
-
-      <div class="box mt-6" style="background-color: #f9f9f9; border: none; border-radius: 15px;">
-        <h3 class="title is-4 has-text-centered">⚡ Tested on Raspberry Pi 4B</h3>
-        <div class="table-container">
-          <table class="table is-fullwidth" style="background: transparent;">
-            <thead>
-              <tr>
-                <th>Model Variant</th>
-                <th class="has-text-centered">Params</th>
-                <th class="has-text-centered">Latency (CPU)</th>
-                <th class="has-text-centered">FPS</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><strong>MeTU-xxs</strong></td>
-                <td class="has-text-centered">1.02M</td>
-                <td class="has-text-centered">83.02 ms</td>
-                <td class="has-text-centered"><strong>12.17</strong></td>
-              </tr>
-              <tr style="color: #888;">
-                <td>MeTU-xs</td>
-                <td class="has-text-centered">2.03M</td>
-                <td class="has-text-centered">134.30 ms</td>
-                <td class="has-text-centered">7.44</td>
-              </tr>
-            </tbody>
-          </table>
+      <div class="columns is-centered">
+        <div class="column is-half">
+          <img src="static/images/Cityscapes_mIoU_table.png" alt="Cityscapes mIoU Table" style="border-radius: 4px;">
+          <p class="is-size-7 has-text-centered has-text-grey mt-2">Table: Performance comparison on Cityscapes dataset.</p>
         </div>
-        <p class="is-size-6 has-text-centered">Reliable inference with ultra-low jitter (<1.1ms variation).</p>
+        <div class="column is-half">
+          <img src="static/images/Cityscapes_class_iou.png" alt="Cityscapes Class IoU" style="border-radius: 4px;">
+          <p class="is-size-7 has-text-centered has-text-grey mt-2">Chart: Class-wise IoU analysis.</p>
+        </div>
       </div>
     </div>
   </section>
 
   <section class="section is-light">
     <div class="container is-max-desktop">
-      <h2 class="title is-3 has-text-centered">Qualitative Results 🖼️</h2>
+      <h2 class="title is-3 has-text-centered">Generalization: PASCAL VOC 2012</h2>
+      <div class="content has-text-centered">
+        <p>
+          On non-rigid objects, MeTU-xs demonstrates superior robustness, achieving <strong>70.31% mIoU</strong> (+9.23%p over Segformer-b0).
+        </p>
+      </div>
+      <div class="columns is-centered">
+        <div class="column is-half">
+          <img src="static/images/VOC_mIoU_table.png" alt="VOC mIoU Table">
+        </div>
+        <div class="column is-half">
+          <img src="static/images/VOC_class_iou.png" alt="VOC Class IoU">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="robustness">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Robustness in Adverse Conditions</h2>
+      <div class="columns is-centered">
+        <div class="column is-four-fifths">
+          <div class="publication-video" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px;">
+            <iframe src="https://www.youtube.com/embed/zDayuDF8Rgo?rel=0"
+                    frameborder="0" allow="autoplay; encrypted-media" allowfullscreen
+                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
+            </iframe>
+          </div>
+        </div>
+      </div>
+      <div class="columns is-vcentered mt-5">
+        <div class="column is-half has-text-centered">
+          <img src="static/images/Robustness_mPC_table.png" alt="Cityscapes-C Table">
+        </div>
+        <div class="column is-half">
+          <p class="content has-text-justified">
+            Evaluated on <strong>Cityscapes-C</strong>, MeTU-xs maintains a stable <strong>43.87% mPC</strong>, proving its reliability under environmental corruptions compared to traditional ASPP-based decoders.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section is-light">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Edge Device Performance</h2>
+      <div class="columns is-centered">
+        <div class="column is-full has-text-centered">
+          <p class="mb-5">Benchmark on <strong>Raspberry Pi 4B</strong> using ONNX Runtime (CPU).</p>
+          <img src="static/images/Edge_performance_table.png" alt="Raspberry Pi Performance Table" style="max-width: 800px; width: 100%;">
+          <p class="is-size-7 has-text-grey mt-2">Stability analysis shows a P50-P99 gap of less than 1.1ms for MeTU-xxs.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Qualitative Results</h2>
       <div id="results-carousel" class="carousel results-carousel">
         <div class="item has-text-centered">
-          <img src="static/images/result_xs.jpg" alt="Prediction 1">
-          <p>MeTU-xs: Crisp boundaries on city streets</p>
+          <img src="static/images/result_xs.jpg" alt="Prediction Result">
+          <p class="mt-2 is-size-6">MeTU-xs: Urban Scene Segmentation</p>
         </div>
         <div class="item has-text-centered">
-          <img src="static/images/architecture.jpg" alt="Architecture">
-          <p>The Hybrid Power: MobileViT + U-Net Skip Connections</p>
+          <img src="static/images/architecture.jpg" alt="Model Architecture">
+          <p class="mt-2 is-size-6">MeTU Hybrid Architecture</p>
         </div>
       </div>
     </div>
@@ -146,7 +160,7 @@
 
   <footer class="footer">
     <div class="content has-text-centered">
-      <p><strong>MeTU Project</strong> by DongBeom Kim. Built for efficient Vision AI.</p>
+      <p><strong>MeTU Project</strong> by DongBeom Kim.</p>
     </div>
   </footer>
 
