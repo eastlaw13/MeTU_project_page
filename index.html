@@ -8,7 +8,8 @@
   <link rel="stylesheet" href="static/css/bulma.min.css">
   <link rel="stylesheet" href="static/css/index.css">
   <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
-  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   
   <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -29,15 +30,16 @@
             <div class="is-size-6 mt-2" style="color: #555; letter-spacing: 0.5px;">
               Computer Vision AI Researcher & Engineer
             </div>
+
             <div class="column has-text-centered">
               <div class="publication-links">
                 <a href="https://github.com/eastlaw13/MeTU-MobileViT-based-U-Net-architecture" target="_blank" class="button is-normal is-rounded is-dark">
-                  <span class="icon"><i class="fab fa-github"></i></span>
+                  <span class="icon"><i class="fa-brands fa-github"></i></span>
                   <span>Code & Weights</span>
                 </a>
                 <a href="#performance" class="button is-normal is-rounded is-light">
-                  <span class="icon"><i class="fas fa-chart-line"></i></span>
-                  <span>Quantitative Results</span>
+                  <span class="icon"><i class="fa-solid fa-chart-simple"></i></span>
+                  <span>Performance Metrics</span>
                 </a>
               </div>
             </div>
@@ -72,13 +74,13 @@
         </p>
       </div>
       <div class="columns is-centered">
-        <div class="column is-half">
-          <img src="static/images/Cityscapes_mIoU_table.png" alt="Cityscapes mIoU Table" style="border-radius: 4px;">
-          <p class="is-size-7 has-text-centered has-text-grey mt-2">Table: Performance comparison on Cityscapes dataset.</p>
+        <div class="column is-half has-text-centered">
+          <img src="static/images/Cityscapes_mIoU_table.png" alt="Cityscapes mIoU Table" style="border: 1px solid #eee; border-radius: 4px;">
+          <p class="is-size-7 has-text-grey mt-2">Table: Performance comparison on Cityscapes dataset.</p>
         </div>
-        <div class="column is-half">
-          <img src="static/images/Cityscapes_class_iou.png" alt="Cityscapes Class IoU" style="border-radius: 4px;">
-          <p class="is-size-7 has-text-centered has-text-grey mt-2">Chart: Class-wise IoU analysis.</p>
+        <div class="column is-half has-text-centered">
+          <img src="static/images/Cityscapes_class_iou.png" alt="Cityscapes Class IoU" style="border: 1px solid #eee; border-radius: 4px;">
+          <p class="is-size-7 has-text-grey mt-2">Chart: Class-wise IoU analysis.</p>
         </div>
       </div>
     </div>
@@ -89,14 +91,14 @@
       <h2 class="title is-3 has-text-centered">Generalization: PASCAL VOC 2012</h2>
       <div class="content has-text-centered">
         <p>
-          On non-rigid objects, MeTU-xs demonstrates superior robustness, achieving <strong>70.31% mIoU</strong> (+9.23%p over Segformer-b0).
+          Evaluating on non-rigid objects, MeTU-xs demonstrates superior robustness, achieving <strong>70.31% mIoU</strong> (+9.23%p over Segformer-b0).
         </p>
       </div>
       <div class="columns is-centered">
-        <div class="column is-half">
+        <div class="column is-half has-text-centered">
           <img src="static/images/VOC_mIoU_table.png" alt="VOC mIoU Table">
         </div>
-        <div class="column is-half">
+        <div class="column is-half has-text-centered">
           <img src="static/images/VOC_class_iou.png" alt="VOC Class IoU">
         </div>
       </div>
@@ -135,7 +137,7 @@
       <div class="columns is-centered">
         <div class="column is-full has-text-centered">
           <p class="mb-5">Benchmark on <strong>Raspberry Pi 4B</strong> using ONNX Runtime (CPU).</p>
-          <img src="static/images/Edge_perform.png" alt="Raspberry Pi Performance Table" style="max-width: 800px; width: 100%;">
+          <img src="static/images/Edge_perform.png" alt="Raspberry Pi Performance Table" style="max-width: 850px; width: 100%;">
           <p class="is-size-7 has-text-grey mt-2">Stability analysis shows a P50-P99 gap of less than 1.1ms for MeTU-xxs.</p>
         </div>
       </div>
@@ -148,11 +150,23 @@
       <div id="results-carousel" class="carousel results-carousel">
         <div class="item has-text-centered">
           <img src="static/images/result_xs.jpg" alt="Prediction Result">
-          <p class="mt-2 is-size-6">MeTU-xs: Urban Scene Segmentation</p>
+          <p class="mt-2 is-size-6">MeTU-xs: Urban Scene Segmentation (Cityscapes)</p>
         </div>
         <div class="item has-text-centered">
           <img src="static/images/model_architecture.png" alt="Model Architecture">
-          <p class="mt-2 is-size-6">MeTU Hybrid Architecture</p>
+          <p class="mt-2 is-size-6">Architecture: MobileViT Backbone + U-Net Decoder</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section hero is-light">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Reproducibility</h2>
+      <div class="content has-text-centered">
+        <p>To ensure perfect reproducibility, we provide a pre-configured Docker image.</p>
+        <div style="background: #2b2b2b; color: #f8f8f2; padding: 20px; border-radius: 8px; text-align: left; display: inline-block; width: 100%; max-width: 800px;">
+          <code>docker pull duriankim/metu-research:v1</code>
         </div>
       </div>
     </div>
@@ -160,7 +174,9 @@
 
   <footer class="footer">
     <div class="content has-text-centered">
-      <p><strong>MeTU Project</strong> by DongBeom Kim.</p>
+      <p>
+        <strong>MeTU Project</strong> by DongBeom Kim. Based on the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template">Academic Project Template</a>.
+      </p>
     </div>
   </footer>
 
